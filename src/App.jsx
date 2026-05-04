@@ -532,6 +532,7 @@ function TagList({ items, className = '' }) {
 function Navigation() {
   const [active, setActive] = useState('top');
   const [scrolled, setScrolled] = useState(false);
+  const [showIdentity, setShowIdentity] = useState(false);
 
   useEffect(() => {
     const navOffset = () => (window.matchMedia('(min-width: 780px)').matches ? 112 : 96);
@@ -545,6 +546,10 @@ function Navigation() {
         return last;
       }, 'top');
       setActive(current === 'sobre' ? 'top' : current);
+
+      const aboutSection = document.getElementById('sobre');
+      const threshold = aboutSection ? Math.max(aboutSection.offsetTop - navOffset(), 72) : Number.POSITIVE_INFINITY;
+      setShowIdentity(window.scrollY >= threshold);
     };
 
     onScroll();
@@ -564,9 +569,21 @@ function Navigation() {
   return (
     <nav className={`nav ${scrolled ? 'nav--scrolled' : ''}`} aria-label="Navegação principal">
       <div className="container nav-inner">
-        <button className="brand" type="button" onClick={() => jumpTo('top')} aria-label="Ir para o início">
-          <span>VB</span>
+        <button
+          className={`brand brand--profile ${showIdentity ? 'is-visible' : ''}`}
+          type="button"
+          onClick={() => jumpTo('top')}
+          aria-label="Ir para o início"
+        >
+          <span className="brand-avatar" aria-hidden="true">
+            <DriveImage id={PROFILE_IMAGE_ID} profile="avatar" alt="" />
+          </span>
+          <span className="brand-text">
+            <span className="brand-name">{profile.name}</span>
+            <span className="brand-name-subtitle">Desenvolvedor Full Cycle</span>
+          </span>
         </button>
+
         <div className="menu" role="list">
           {navItems.map((item) => (
             <button
@@ -608,7 +625,7 @@ function Hero() {
             <strong>{profile.role}</strong> • {profile.headline}
           </p>
           <p className="lead">
-            Autodidata, versátil e apaixonado por criar soluções que fazem a diferença. <strong> Experiência </strong> com<strong>  desenvolvimento </strong> de sistemas completos,
+            Autodidata, versátil e apaixonado por criar soluções que fazem a diferença. Experiênte em<strong>  desenvolvimento </strong> de sistemas completos,
             <strong> automações</strong>  inteligentes, análises de <strong> dados</strong>  e <strong> integrações</strong>  robustas que unem experiência de usuário,
             <strong> arquitetura moderna</strong>  e tecnologia de ponta para gerar <strong> valor real para o negócio.</strong> 
           </p>
@@ -818,6 +835,7 @@ function ProjectCard({ project, index, onOpen }) {
                 </div>
               ))}
             </div>
+            <span className="project-open-inline"><Icon name="external" size={17} /> Abrir galeria</span>
           </div>
           <div className="project-content">
             <div className="project-card-top">
@@ -830,7 +848,6 @@ function ProjectCard({ project, index, onOpen }) {
             </div>
             <div className="project-info">
               <p>{project.description}</p>
-              <span className="project-open-inline"><Icon name="external" size={17} /> Abrir galeria</span>
             </div>
           </div>
         </div>
