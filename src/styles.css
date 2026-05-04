@@ -152,20 +152,45 @@ footer[id] {
   background: rgba(247, 248, 250, 0.78);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-  transition: background .25s ease, box-shadow .25s ease;
+  transition: border-color .22s ease;
 }
 
 .nav--scrolled {
-  background: rgba(255, 255, 255, 0.94);
-  box-shadow: 0 10px 24px rgba(18, 20, 23, 0.08);
+  border-bottom-color: transparent;
+}
+
+.nav::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 2px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(183, 138, 69, 0.35) 22%,
+    var(--accent) 50%,
+    rgba(183, 138, 69, 0.35) 78%,
+    transparent 100%
+  );
+  opacity: 0;
+  transform: scaleX(0.88);
+  transition: opacity .28s ease, transform .28s ease;
+  pointer-events: none;
+}
+
+.nav.nav--scrolled::after {
+  opacity: 0.15;
+  transform: scaleX(1);
 }
 
 .nav-inner {
   min-height: 74px;
   display: grid;
-  grid-template-columns: auto minmax(0, 1fr);
+  grid-template-columns: auto auto minmax(0, 1fr);
   align-items: center;
-  gap: 18px;
+  gap: 10px;
 }
 
 .brand {
@@ -232,19 +257,22 @@ footer[id] {
   white-space: nowrap;
 }
 
-.brand-text {
-  display: grid;
-  gap: 1px;
-  min-width: 0;
-}
-
 .brand-name-subtitle {
-  font-size: 10px;
+  font-size: 11px;
   font-weight: 700;
   color: var(--muted);
-  letter-spacing: .01em;
+  letter-spacing: .008em;
   white-space: nowrap;
   line-height: 1.2;
+  opacity: 0;
+  transform: translate3d(-4px, 0, 0);
+  pointer-events: none;
+  transition: opacity .22s ease, transform .22s ease;
+}
+
+.brand-name-subtitle.is-visible {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
 }
 
 .menu {
@@ -253,11 +281,18 @@ footer[id] {
   gap: 6px;
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
-  scrollbar-width: none;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(18, 20, 23, .22) transparent;
 }
 
 .menu::-webkit-scrollbar {
-  display: none;
+  display: block;
+  height: 4px;
+}
+
+.menu::-webkit-scrollbar-thumb {
+  background: rgba(18, 20, 23, .22);
+  border-radius: 999px;
 }
 
 .menu button {
@@ -273,17 +308,62 @@ footer[id] {
   font-weight: 700;
   white-space: nowrap;
   cursor: pointer;
-  transition: color .22s ease, background .22s ease, transform .22s ease;
+  transition: color .22s ease, transform .22s ease;
 }
 
-.menu button:hover,
+.menu button::after {
+  content: "";
+  position: absolute;
+  left: 10px;
+  right: 10px;
+  bottom: 8px;
+  height: 2px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, transparent 0%, var(--accent) 45%, var(--accent) 55%, transparent 100%);
+  opacity: 0;
+  transform: scaleX(0.2);
+  transform-origin: center;
+  transition: opacity .22s ease, transform .22s ease;
+  pointer-events: none;
+}
+
+.menu button:hover {
+  color: var(--ink);
+  background: transparent;
+}
+
+.menu button:hover::after {
+  opacity: .42;
+  transform: scaleX(0.55);
+}
+
 .menu button.active {
   color: var(--ink);
-  background: rgba(255, 255, 255, .72);
+  background: transparent;
+  box-shadow: none;
 }
 
-.menu button.active {
-  box-shadow: inset 0 0 0 1px var(--line);
+.menu button.active::after {
+  opacity: .9;
+  transform: scaleX(1);
+}
+
+.menu button:focus {
+  outline: none;
+}
+
+.menu button:focus-visible {
+  outline: none;
+}
+
+.menu button:focus-visible::after {
+  opacity: 0.82;
+  transform: scaleX(0.92);
+}
+
+.menu button.active:focus-visible::after {
+  opacity: 0.95;
+  transform: scaleX(1);
 }
 
 .hero {
@@ -315,6 +395,8 @@ footer[id] {
 .portrait-wrap {
   display: flex;
   justify-content: center;
+  border-bottom: 1px solid rgba(18, 20, 23, .08);
+  margin-bottom: 8px;
 }
 
 .portrait-stack {
@@ -1718,7 +1800,7 @@ h1 span {
     border-radius: 999px;
     border: 1px solid rgba(18, 20, 23, .1);
     background: rgba(255, 255, 255, .94);
-    box-shadow: 0 12px 32px rgba(18, 20, 23, .14);
+    box-shadow: 0 2px 12px rgba(18, 20, 23, .04);
     color: var(--ink);
     font-size: 16px;
     font-weight: 800;
@@ -1769,8 +1851,16 @@ h1 span {
   }
 
   .date-pill {
-    padding: 7px 10px;
-    font-size: .74rem;
+    padding: 5px 9px;
+    font-size: .68rem;
+    font-weight: 800;
+    gap: 4px;
+  }
+
+  .date-pill svg,
+  .date-pill .icon {
+    width: 13px;
+    height: 13px;
   }
 
   .timeline p,
@@ -1968,16 +2058,15 @@ h1 span {
 
   .nav-inner {
     min-height: auto;
-    grid-template-columns: 1fr;
+    grid-template-columns: auto auto minmax(0, 1fr);
     gap: 6px;
     padding-block: 6px;
   }
 
   .brand--profile {
-    justify-self: start;
     min-height: 42px;
-    padding: 3px 10px 3px 3px;
-    gap: 8px;
+    padding: 3px 7px 3px 3px;
+    gap: 6px;
   }
 
   .brand-avatar {
@@ -1986,7 +2075,7 @@ h1 span {
   }
 
   .brand-name {
-    font-size: 12px;
+    font-size: 11px;
   }
 
   .brand-name-subtitle {
@@ -1994,29 +2083,40 @@ h1 span {
   }
 
   .menu {
-    width: 100%;
+    min-width: 0;
     justify-content: flex-start;
-    padding: 1px 0 4px;
-    gap: 5px;
+    padding: 1px 0 2px;
+    gap: 4px;
     scrollbar-width: thin;
-    scrollbar-color: rgba(18, 20, 23, .25) transparent;
+    scrollbar-color: rgba(18, 20, 23, .09) transparent;
   }
 
   .menu::-webkit-scrollbar {
     display: block;
-    height: 4px;
+    height: 2px;
+  }
+
+  .menu::-webkit-scrollbar-track {
+    background: transparent;
   }
 
   .menu::-webkit-scrollbar-thumb {
-    background: rgba(18, 20, 23, .25);
+    background: rgba(18, 20, 23, .11);
     border-radius: 999px;
   }
 
   .menu button {
-    font-size: 10.5px;
+    font-size: 10px;
     letter-spacing: .01em;
-    padding-inline: 9px;
-    min-height: 44px;
+    padding-inline: 8px;
+    min-height: 40px;
+  }
+
+  .menu button::after {
+    bottom: 5px;
+    left: 7px;
+    right: 7px;
+    height: 1.5px;
   }
 
   .hero {
@@ -2075,6 +2175,20 @@ h1 span {
 
   .timeline-company {
     font-size: .84rem;
+  }
+
+  .date-pill {
+    padding: 4px 8px;
+    font-size: .62rem;
+    font-weight: 800;
+    letter-spacing: .02em;
+    gap: 3px;
+  }
+
+  .date-pill svg,
+  .date-pill .icon {
+    width: 11px;
+    height: 11px;
   }
 
   .skill-card,
@@ -2227,7 +2341,6 @@ h1 span {
   outline-offset: 3px;
 }
 
-.menu button:focus-visible,
 .brand:focus-visible,
 .btn:focus-visible,
 .project-button:focus-visible,

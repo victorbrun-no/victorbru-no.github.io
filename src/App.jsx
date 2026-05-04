@@ -1,4 +1,4 @@
-import { useEffect, useId, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useId, useMemo, useRef, useState } from 'react';
 import {
   BarChart3,
   Bot,
@@ -533,6 +533,20 @@ function Navigation() {
   const [active, setActive] = useState('top');
   const [scrolled, setScrolled] = useState(false);
   const [showIdentity, setShowIdentity] = useState(false);
+  const menuRef = useRef(null);
+
+  const scrollMenuToNavId = useCallback((navId, behavior = 'smooth') => {
+    const menu = menuRef.current;
+    if (!menu) return;
+    const btn = menu.querySelector(`button[data-nav-id="${navId}"]`);
+    if (!btn) return;
+    const maxScroll = Math.max(0, menu.scrollWidth - menu.clientWidth);
+    const targetLeft = btn.offsetLeft - (menu.clientWidth - btn.offsetWidth) / 2;
+    menu.scrollTo({
+      left: Math.min(Math.max(0, targetLeft), maxScroll),
+      behavior
+    });
+  }, []);
 
   useEffect(() => {
     const navOffset = () => (window.matchMedia('(min-width: 780px)').matches ? 112 : 96);
@@ -557,9 +571,15 @@ function Navigation() {
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
+  useEffect(() => {
+    const frame = requestAnimationFrame(() => scrollMenuToNavId(active, 'smooth'));
+    return () => cancelAnimationFrame(frame);
+  }, [active, scrollMenuToNavId]);
+
   function jumpTo(id) {
     const element = document.getElementById(id);
     if (!element) return;
+    scrollMenuToNavId(id, 'auto');
     const offset = window.matchMedia('(min-width: 780px)').matches ? 112 : 96;
     const top = Math.max(element.getBoundingClientRect().top + window.scrollY - offset, 0);
     window.scrollTo({ top, behavior: 'smooth' });
@@ -578,17 +598,16 @@ function Navigation() {
           <span className="brand-avatar" aria-hidden="true">
             <DriveImage id={PROFILE_IMAGE_ID} profile="avatar" alt="" />
           </span>
-          <span className="brand-text">
-            <span className="brand-name">{profile.name}</span>
-            <span className="brand-name-subtitle">Desenvolvedor Full Cycle</span>
-          </span>
+          <span className="brand-name">{profile.name}</span>
         </button>
+        <span className={`brand-name-subtitle ${showIdentity ? 'is-visible' : ''}`}>• Desenvolvedor Full Cycle</span>
 
-        <div className="menu" role="list">
+        <div className="menu" ref={menuRef} role="list">
           {navItems.map((item) => (
             <button
               type="button"
               key={item.id}
+              data-nav-id={item.id}
               className={active === item.id || (item.id === 'top' && active === 'sobre') ? 'active' : ''}
               onClick={() => jumpTo(item.id)}
               aria-current={active === item.id || (item.id === 'top' && active === 'sobre') ? 'page' : undefined}
@@ -790,8 +809,8 @@ function Stacks() {
           {stacks.map((item, index) => (
             <Reveal as="article" className="stack-card premium-card" delay={index * 70} key={item.title}>
               <div className="card-head">
-                <h3>{item.title}</h3>•
-                <div className="card-icon icon-pop"><Icon name={item.icon} /></div>
+                <div className="card-icon icon-pop"><Icon name={item.icon} /></div> 
+                <h3>{item.title}</h3>
               </div>
               <p>{item.text}</p>
               <TagList items={item.tags} className="muted-tags" />
