@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://victorbrun-no.github.io/victorbru-no.github.io/sitemap.xml
+Sitemap: https://victorbrun-no.github.io/portifolio-curriculo/sitemap.xml
