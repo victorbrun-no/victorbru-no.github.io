@@ -395,7 +395,6 @@ footer[id] {
 .portrait-wrap {
   display: flex;
   justify-content: center;
-  border-bottom: 1px solid rgba(18, 20, 23, .08);
   margin-bottom: 8px;
 }
 
@@ -1830,6 +1829,11 @@ h1 span {
 }
 
 @media (max-width: 900px) {
+  
+  .section{
+    padding: 16px 0;
+  }
+  
   .timeline {
     gap: 10px;
   }
@@ -1859,6 +1863,10 @@ h1 span {
   .timeline-company {
     font-size: .88rem;
     line-height: 1.4;
+  }
+
+  .portrait-wrap {
+    border-bottom: 1px solid rgba(18, 20, 23, .08);
   }
 
   .date-pill {

@@ -254,7 +254,7 @@ const experiences = [
     roleIcon: 'building2',
     company: 'Analista de Planejamento III / Analista Sênior',
     period: '01/02/2018 – 04/06/2021',
-    text: 'Responsável por atividades ligadas a planejamento, MIS e análise de dados, com forte atuação em relatórios, interpretação de indicadores, apoio à operação e geração de insumos para tomada de decisão em ambiente corporativo de grande porte.',
+    text: 'Responsável por atividades ligadas a: Planejamento, MIS e análise de dados, com forte atuação em relatórios, interpretação de indicadores, apoio à operação e geração de insumos para tomada de decisão em ambiente corporativo de grande porte.',
     bullets: [
       'Construção e manutenção de relatórios operacionais e gerenciais.',
       'Análise crítica de performance, produtividade e processos.',
@@ -382,7 +382,7 @@ const projects = [
   {
     title: 'Consultas Pro',
     category: 'Produto Web • 4 telas',
-    description: 'Dashboard e operação escaláveis, com visão prática de produto, módulos integrados e sustentação de um ecossistema técnico amplo.',
+    description: 'Dashboard e operações escaláveis, com visão prática de produto, módulos integrados e sustentação de um ecossistema técnico amplo.',
     tags: ['Dashboard', 'SaaS', 'Dados', 'Integrações'],
     mediaItems: [
       { type: 'image', id: DRIVE_MEDIA.consultasProIntegracoesTipos },
@@ -644,9 +644,10 @@ function Hero() {
             <strong>{profile.role}</strong> • {profile.headline}
           </p>
           <p className="lead">
-            Autodidata, versátil e apaixonado por criar soluções que fazem a diferença. Experiênte em<strong>  desenvolvimento </strong> de sistemas completos,
-            <strong> automações</strong>  inteligentes, análises de <strong> dados</strong>  e <strong> integrações</strong>  robustas que unem experiência de usuário,
-            <strong> arquitetura moderna</strong>  e tecnologia de ponta para gerar <strong> valor real para o negócio.</strong> 
+            Autodidata, versátil e apaixonado por criar soluções que fazem a diferença. Experiente em{' '}
+            <strong>desenvolvimento</strong> de sistemas completos, <strong>automações</strong> inteligentes, análises de{' '}
+            <strong>dados</strong> e <strong>integrações</strong> robustas que unem experiência de usuário,{' '}
+            <strong>arquitetura moderna</strong> e tecnologia de ponta para gerar <strong>valor real para o negócio</strong>.
           </p>
 
           <div className="chips" aria-label="Informações rápidas">
@@ -886,7 +887,7 @@ function Projects() {
         <SectionHeader
           eyebrow="Projetos"
           title="Projetos em destaque"
-          text="Projetizados e desenvolvidos por mim: front-end, back-end, banco de dados, arquitetura e implantação."
+          text="Projetados e desenvolvidos por mim: front-end, back-end, banco de dados, arquitetura e implantação."
         />
         <div className="projects-grid">
           {projects.map((project, index) => (
