@@ -753,6 +753,15 @@ h1 span {
 .timeline-content {
   position: relative;
   z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+
+.timeline-content .timeline-date {
+  align-self: flex-end;
+  margin-top: 14px;
+  margin-bottom: 0;
 }
 
 .timeline-top {
@@ -815,20 +824,27 @@ h1 span {
 .date-pill {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
+  gap: 5px;
   width: fit-content;
   margin: 0;
-  padding: 9px 12px;
-  border: 1px solid rgba(183, 138, 69, .26);
-  border-radius: 999px;
-  background: var(--accent-soft);
-  color: #765627;
-  font-size: .82rem;
-  font-weight: 900;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: var(--muted-2);
+  font-size: .78rem;
+  font-weight: 600;
+  letter-spacing: .02em;
   white-space: nowrap;
 }
 
-.timeline p {
+.date-pill svg,
+.date-pill .icon {
+  color: var(--muted-2);
+  opacity: 0.5;
+}
+
+.timeline-body {
   color: var(--muted);
   line-height: 1.62;
 }
@@ -1636,11 +1652,6 @@ h1 span {
     left: -36px;
   }
 
-  .timeline-top {
-    grid-template-columns: minmax(0, 1fr) auto;
-    align-items: start;
-  }
-
   .project-button {
     padding: 0;
   }
@@ -1851,19 +1862,23 @@ h1 span {
   }
 
   .date-pill {
-    padding: 5px 9px;
-    font-size: .68rem;
-    font-weight: 800;
+    padding: 0;
+    font-size: .72rem;
+    font-weight: 600;
+    line-height: 1.2;
     gap: 4px;
+    letter-spacing: .02em;
+    color: var(--muted-2);
   }
 
   .date-pill svg,
   .date-pill .icon {
-    width: 13px;
-    height: 13px;
+    width: 11px;
+    height: 11px;
+    opacity: 0.48;
   }
 
-  .timeline p,
+  .timeline-body,
   .timeline ul {
     font-size: .94rem;
     line-height: 1.56;
@@ -2178,17 +2193,21 @@ h1 span {
   }
 
   .date-pill {
-    padding: 4px 8px;
-    font-size: .62rem;
-    font-weight: 800;
+    padding: 0;
+    font-size: 9px;
+    font-weight: 600;
+    line-height: 1.15;
     letter-spacing: .02em;
     gap: 3px;
+    color: var(--muted-2);
   }
 
   .date-pill svg,
   .date-pill .icon {
-    width: 11px;
-    height: 11px;
+    width: 10px;
+    height: 10px;
+    flex-shrink: 0;
+    opacity: 0.45;
   }
 
   .skill-card,

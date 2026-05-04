@@ -741,14 +741,16 @@ function Experience() {
                     </h3>
                     <span className="timeline-company">• {item.company}</span>
                   </div>
-                  <p className="date-pill"><Icon name="calendar" size={15} /> {item.period}</p>
                 </div>
-                <p>{item.text}</p>
+                <p className="timeline-body">{item.text}</p>
                 <ul>
                   {item.bullets.map((bullet) => (
                     <li key={bullet}>{bullet}</li>
                   ))}
                 </ul>
+                <p className="date-pill timeline-date">
+                  <Icon name="calendar" size={12} /> {item.period}
+                </p>
               </div>
             </Reveal>
           ))}
