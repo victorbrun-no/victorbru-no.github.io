@@ -964,10 +964,6 @@ function ProjectModal({ project, onClose }) {
     >
       <div className="modal-shell" ref={shellRef}>
         <div className="modal-top">
-          <div>
-            <span>{project.category}</span>
-            <h3 id={titleId}>{project.title}</h3>
-          </div>
           <button ref={closeButtonRef} className="icon-button" type="button" onClick={onClose} aria-label="Fechar galeria">
             <Icon name="close" />
           </button>
@@ -975,6 +971,12 @@ function ProjectModal({ project, onClose }) {
 
         <div className="modal-body">
           <div className="modal-gallery">
+            <header className="modal-gallery-head">
+              <p className="modal-gallery-eyebrow">{project.category}</p>
+              <h2 className="modal-gallery-title" id={titleId}>
+                {project.title}
+              </h2>
+            </header>
             <div className="modal-media">
               {media.type === 'video' ? (
                 <iframe
